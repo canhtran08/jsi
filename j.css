@@ -1,0 +1,22 @@
+#scrollToTopBtn {
+    border-radius: 50%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  #scrollToTopBtn:hover {
+    background-color: #0056b3;
+  }
+
+  body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+  }
+
+  .carousel-item {
+    transition: transform 1s ease-in-out;
+  }

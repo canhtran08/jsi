@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dangky.css">
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <img src="https://uk.trapstarlondon.com/cdn/shop/files/Trapstar-Logo.png?v=1715704481&width=130" alt="">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./dangnhap.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./dangky.html">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./dangnhap.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="register-section">
+        <div class="container">
+            <h2 class="text-center">Please Sign Up</h2>
+            <form id="register-form">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            </form>
+            <p class="error-message" id="error-message" style="display: none;" class="text-danger mt-3">Invalid
+                information or passwords do not match!</p>
+        </div>
+    </section>
+
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+<script>
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBx3PzmC8YLzHep_-eYmqbvKQUHkovG8UU",
+        authDomain: "jmgjmg-db5fa.firebaseapp.com",
+        databaseURL: "https://jmgjmg-db5fa-default-rtdb.firebaseio.com",
+        projectId: "jmgjmg-db5fa",
+        storageBucket: "jmgjmg-db5fa.appspot.com",
+        messagingSenderId: "549398587657",
+        appId: "1:549398587657:web:012cb55a279f345c3f8bd8",
+        measurementId: "G-JJPQE2DC2X"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    document.getElementById("register-form").addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        isUsernameTaken(username).then(taken => {
+            if (taken) {
+                alert("Username already taken");
+            } else {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        const newUser = {
+                            username,
+                            email,
+                            id: user.uid,
+                            password
+                        };
+
+                        db.ref("users/" + user.uid).set(newUser)
+                            .then(() => {
+                                alert('Sign up successful!');
+                                document.getElementById("register-form").reset();
+                                window.location.href = './dangnhap.html';
+                            })
+                            .catch((error) => {
+                                console.error("Error writing to database: ", error);
+                            });
+                    })
+                    .catch((error) => {
+                        alert(error.message);
+                    });
+            }
+        });
+    });
+
+    function isUsernameTaken(username) {
+        return db.ref("users").orderByChild("username").equalTo(username).once("value").then((snapshot) => {
+            return snapshot.exists();
+        });
+    }
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+/* General Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('https://tudiensolar.com/wp-content/uploads/2021/02/set-danh-anh-minh-hoa-statefarm.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: #333;
+    margin: 0;
+}
+
+/* Header Section */
+header {
+    background-color: rgba(52, 58, 64, 0.9); /* Slight transparency */
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header nav ul li a:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* Register Section */
+#register-section {
+    background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin: 50px auto;
+    max-width: 600px;
+}
+
+h2 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+form .form-control {
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+/* Button Styling */
+button {
+    border-radius: 8px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    padding: 14px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Footer Styling */
+footer {
+    padding: 20px;
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 14px;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #0056b3;
+}

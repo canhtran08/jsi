@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Admin</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="bg-dark text-white text-center py-4">
+      <h1>Trang Admin</h1>
+      <nav>
+        <ul class="nav justify-content-center">
+          <li class="nav-item">
+            <a href="trangchinh.html" class="nav-link text-white"
+              >Quay lại trang chủ</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="manage-products" class="container mt-5">
+      <h2 class="text-center">Quản lý Sản phẩm</h2>
+
+      <!-- Form thêm sản phẩm -->
+      <form id="add-product-form" class="mt-4">
+        <div class="mb-3">
+          <label for="product-name" class="form-label">Tên sản phẩm:</label>
+          <input type="text" id="product-name" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="product-price" class="form-label">Giá sản phẩm:</label>
+          <input
+            type="number"
+            id="product-price"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="product-image" class="form-label">Ảnh sản phẩm:</label>
+          <input
+            type="text"
+            id="product-image"
+            class="form-control"
+            placeholder="URL ảnh"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="product-detail" class="form-label">Ảnh detaill:</label>
+          <input
+            type="text"
+            id="product-detail"
+            class="form-control"
+            placeholder="URL ảnh"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">
+          Thêm sản phẩm
+        </button>
+      </form>
+
+      <!-- Danh sách sản phẩm -->
+      <div class="container mt-4">
+        <h3 class="mb-4">Danh sách sản phẩm</h3>
+        <div class="row" id="product-list">
+          <!-- Sản phẩm sẽ được thêm vào đây -->
+        </div>
+      </div>
+
+      <section id="shopping-cart" class="container my-5">
+        <h2 class="mb-4 text-center">🛒 Giỏ hàng</h2>
+        <ul class="list-group" id="cart-list"></ul>
+        <div class="mt-3 text-end">
+          <strong>Tổng tiền: <span id="cart-total">0₫</span></strong>
+        </div>
+      </section>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <!-- Kêt nôi firebase -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBx3PzmC8YLzHep_-eYmqbvKQUHkovG8UU",
+        authDomain: "jmgjmg-db5fa.firebaseapp.com",
+        databaseURL: "https://jmgjmg-db5fa-default-rtdb.firebaseio.com",
+        projectId: "jmgjmg-db5fa",
+        storageBucket: "jmgjmg-db5fa.appspot.com",
+        messagingSenderId: "549398587657",
+        appId: "1:549398587657:web:012cb55a279f345c3f8bd8",
+        measurementId: "G-JJPQE2DC2X",
+      };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.database();
+    </script>
+
+    <!-- Thêm  -->
+    <script>
+      document
+        .getElementById("add-product-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("product-name").value;
+          const price = document.getElementById("product-price").value;
+          const image = document.getElementById("product-image").value;
+          const detail = document.getElementById("product-detail").value;
+
+          const newProductRef = db.ref("products").push(); // tạo ID mới tự động
+
+          const productData = {
+            name,
+            price: parseFloat(price),
+            image,
+            detail,
+          };
+
+          newProductRef
+            .set(productData)
+            .then(() => {
+              alert("Thêm sản phẩm thành công!");
+              document.getElementById("add-product-form").reset();
+            })
+            .catch((error) => {
+              console.error("Lỗi khi thêm sản phẩm: ", error);
+            });
+        });
+    </script>
+
+    <!-- Kêt nôi firebase -->
+
+    <script>
+      const productList = document.getElementById("product-list");
+
+      db.ref("products").on("value", (snapshot) => {
+        productList.innerHTML = ""; // Xoá dữ liệu cũ trước khi load mới
+
+        snapshot.forEach((childSnapshot) => {
+          const product = childSnapshot.val();
+
+          const col = document.createElement("div");
+          col.className = "col-md-4 mb-4";
+
+          col.innerHTML = `
+                <div class="card h-100 shadow-sm">
+                    <img src="${product.image}" class="card-img-top" alt="${
+            product.name
+          }" style="object-fit: cover; height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text">${product.detail}</p>
+                        <p class="card-text fw-bold text-danger">${Number(
+                          product.price
+                        ).toLocaleString()}₫</p>
+                        <button class="btn btn-danger mt-auto" onclick="deleteProduct('${
+                          childSnapshot.key
+                        }')">Xoá</button>
+                    </div>
+                </div>
+            `;
+
+          productList.appendChild(col);
+        });
+      });
+      function deleteProduct(productId) {
+        if (confirm("Bạn có chắc muốn xoá sản phẩm này không?")) {
+          db.ref("products/" + productId)
+            .remove()
+            .then(() => {
+              alert("Đã xoá sản phẩm.");
+            })
+            .catch((error) => {
+              console.error("Lỗi khi xoá: ", error);
+            });
+        }
+      }
+    </script>
+    <script>
+      const cartList = document.getElementById("cart-list");
+      const cartTotalEl = document.getElementById("cart-total");
+
+      function loadCart() {
+        db.ref("cart").on("value", (snapshot) => {
+          cartList.innerHTML = "";
+          let total = 0;
+
+          snapshot.forEach((child) => {
+            const item = child.val();
+            total += Number(item.price);
+
+            const li = document.createElement("li");
+            li.className =
+              "list-group-item d-flex justify-content-between align-items-center";
+            li.innerHTML = `
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <small>${item.detail}</small>
+                    </div>
+                    <div>
+                        <span class="text-danger fw-bold">${Number(
+                          item.price
+                        ).toLocaleString()}₫</span>
+                    </div>
+                `;
+            cartList.appendChild(li);
+          });
+
+          cartTotalEl.innerText = total.toLocaleString() + "₫";
+        });
+      }
+
+      // Gọi khi trang load
+      loadCart();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Advertising</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="j.css" rel="stylesheet">
+  <style>
+    #scrollToTopBtn {
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 18px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #scrollToTopBtn:hover {
+      background-color: #0056b3;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    .carousel-item {
+      transition: transform 1s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TÊN -->
+  <section class="hero-section">
+    <div class="container">
+      <h1>Welcome to Trapstar</h1>
+      <p>We help you make new out fit.</p>
+      <a href="#cta" class="cta-btn">Get Started Now</a>
+    </div>
+  </section>
+  
+  <!-- SLINE CHẠY -->
+  <div id="carouselExampleFade" class="carousel slide carousel-fade mt-4" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img style="height: 900px;" src="https://streetvibe.vn/wp-content/uploads/2024/04/1-6.jpg" class="d-block w-100" alt="Product">
+        </div>
+        <div class="carousel-item">
+            <img style="height: 900px;" src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2022%2F06%2Ftrapstar-paris-shutdown-0.jpg?w=960&cbr=1&q=90&fit=max" class="d-block w-100" alt="Promotion">
+        </div>
+        <div class="carousel-item">
+            <img style="height: 900px;" src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/trapstar-london-nadine-a-courtemanche.jpg" class="d-block w-100" alt="New Product">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- CARD -->
+  <section class="features-section">
+    <div class="container">
+      <h2>New Product</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <h4>40%-50%</h4>
+            <p>Optimize your advertising campaigns for outstanding results at a reasonable cost.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <h4>STREET OUTFIT</h4>
+            <p>Support advertising on multiple online platforms such as Google Ads, Facebook Ads, and more.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <h4>CHISMART BIG SALE</h4>
+            <p>Our professional customer support team is available 24/7 to help you achieve your goals quickly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section id="cta" class="text-center py-5">
+    <div class="container">
+      <h2>Sign Up Today!</h2>
+      <p>Don’t miss the new clother to you.</p>
+      <a href="./dangnhap.html" class="cta-btn">Sign in</a>
+    </div>
+  </section>
+
+  <!-- Scroll-to-Top Button -->
+  <button id="scrollToTopBtn" class="btn btn-primary" style="position: fixed; bottom: 30px; right: 30px; display: none;">
+    ↑ Scroll to Top
+  </button>
+
+  <!-- Sign-In Form -->
+  <form id="signInForm" class="mt-4">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign In</button>
+  </form>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <div class="container">
+      <h3>Filter Products</h3>
+      <select class="form-select" id="productFilter">
+        <option value="all">All Products</option>
+        <option value="new">New Products</option>
+        <option value="sale">On Sale</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 WebAdvertising. All rights reserved.</p>
+    <p><a href="terms.html">Terms of Service</a> | <a href="privacy.html">Privacy Policy</a></p>
+  </footer>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript for smooth scrolling, scroll-to-top button, form validation, and dark mode -->
+  <script>
+    // Smooth Scrolling for CTA Button
+    document.querySelector('.cta-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector('#cta').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Scroll-to-Top Button
+    let mybutton = document.getElementById("scrollToTopBtn");
+    window.onscroll = function () {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    };
+
+    mybutton.addEventListener('click', function () {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
+
+    // Form Validation
+    document.getElementById('signInForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('Please fill in both fields.');
+        return;
+      }
+
+      alert('Form submitted successfully!');
+    });
+
+    // Product Filter
+    document.getElementById('productFilter').addEventListener('change', function () {
+      let filterValue = this.value;
+      if (filterValue === 'new') {
+        alert('Showing New Products');
+      } else if (filterValue === 'sale') {
+        alert('Showing Products on Sale');
+      } else {
+        alert('Showing All Products');
+      }
+    });
+
+    // Dark Mode Toggle
+    const toggleButton = document.getElementById('modeToggle');
+    toggleButton.addEventListener('click', function () {
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
+</body>
+</html>

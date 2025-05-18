@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreetVibe - Urban Streetwear</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React and ReactDOM CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- Babel for JSX -->
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.9/Babel.min.js"></script>
+  <style>
+    /* Custom styles for Trapstar-like aesthetic */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+    .hero-bg {
+      background-image: url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    .glow-text {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    .product-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+    }
+    .limited-drop {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main App Container -->
+  <div id="root"></div>
+
+  <!-- React JSX Script -->
+  <script type="text/babel">
+    // Sample product data
+    const products = [
+      { id: 1, name: 'Irongate Hoodie', price: 89.99, image: 'https://images.unsplash.com/photo-1591195853828-11ae692ba6cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60', limited: true },
+      { id: 2, name: 'Decoded Tracksuit', price: 129.99, image: 'https://images.unsplash.com/photo-1617952236719-0b03dd6f29c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60', limited: false },
+      { id: 3, name: 'StreetVibe Tee', price: 39.99, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60', limited: false },
+      { id: 4, name: 'Urban Puffer Jacket', price: 159.99, image: 'https://images.unsplash.com/photo-1604644401890-925ff4599d8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60', limited: true },
+    ];
+
+    // Header Component
+    function Header() {
+      return (
+        <header className="bg-black p-4 sticky top-0 z-50">
+          <nav className="container mx-auto flex justify-between items-center">
+            <h1 className="text-3xl font-bold glow-text">StreetVibe</h1>
+            <ul className="flex space-x-6">
+              <li><a href="#home" className="hover:text-gray-300">Home</a></li>
+              <li><a href="#shop" className="hover:text-gray-300">Shop</a></li>
+              <li><a href="#about" className="hover:text-gray-300">About</a></li>
+              <li><a href="#contact" className="hover:text-gray-300">Contact</a></li>
+            </ul>
+          </nav>
+        </header>
+      );
+    }
+
+    // Hero Component
+    function Hero() {
+      return (
+        <section id="home" className="hero-bg h-screen flex items-center justify-center text-center">
+          <div>
+            <h2 className="text-5xl md:text-7xl font-bold glow-text mb-4">Define Your Vibe</h2>
+            <p className="text-xl md:text-2xl mb-6">Exclusive streetwear inspired by urban culture.</p>
+            <a href="#shop" className="bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-gray-200 transition">Shop Now</a>
+          </div>
+        </section>
+      );
+    }
+
+    // Product Card Component
+    function ProductCard({ product }) {
+      return (
+        <div className="product-card bg-gray-900 rounded-lg overflow-hidden relative">
+          <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
+          {product.limited && (
+            <span className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded text-sm limited-drop">Limited Drop</span>
+          )}
+          <div className="p-4">
+            <h3 className="text-xl font-bold">{product.name}</h3>
+            <p className="text-gray-400">${product.price.toFixed(2)}</p>
+            <button className="mt-2 bg-white text-black px-4 py-2 rounded-full w-full hover:bg-gray-200 transition">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // Shop Component
+    function Shop() {
+      return (
+        <section id="shop" className="py-16">
+          <div className="container mx-auto">
+            <h2 className="text-4xl font-bold text-center mb-12 glow-text">Latest Drops</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {products.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // Footer Component
+    function Footer() {
+      return (
+        <footer className="bg-black py-8">
+          <div className="container mx-auto text-center">
+            <p className="text-gray-400 mb-4">&copy; 2025 StreetVibe. All rights reserved.</p>
+            <div className="flex justify-center space-x-4">
+              <a href="#" className="text-gray-400 hover:text-white">Instagram</a>
+              <a href="#" className="text-gray-400 hover:text-white">Twitter</a>
+              <a href="#" className="text-gray-400 hover:text-white">Facebook</a>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    // Main App Component
+    function App() {
+      return (
+        <div>
+          <Header />
+          <Hero />
+          <Shop />
+          <Footer />
+        </div>
+      );
+    }
+
+    // Render the App
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
